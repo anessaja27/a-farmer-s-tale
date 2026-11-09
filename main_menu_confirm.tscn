@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://8riu1v6plhqu"]
+
+[ext_resource type="Texture2D" uid="uid://b3kfl8eg7qrlp" path="res://assets/ui/ui_only/main_menu_confirm.png" id="1_hxrwr"]
+
+[sub_resource type="GDScript" id="GDScript_nwcfo"]
+script/source = "extends Control
+
+const main_menu = \"res://main_menu.tscn\"
+
+
+func _on_main_menu_pressed() -> void:
+	get_tree().paused = false
+
+	var current_scene = get_tree().current_scene
+
+	if current_scene.has_method(\"fade_out\"):
+		await current_scene.fade_out()
+
+	get_tree().change_scene_to_file(\"res://main_menu.tscn\")
+
+
+func _on_cancel_pressed() -> void:
+	hide()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5qj7y"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_454ge"]
+bg_color = Color(0, 0, 0, 0.1764706)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48x61"]
+bg_color = Color(0, 0, 0, 0)
+
+[node name="MainMenuConfirm" type="Control" unique_id=551290789]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_nwcfo")
+
+[node name="FadeLayer" type="CanvasLayer" parent="." unique_id=425337619]
+
+[node name="ColorRect" type="ColorRect" parent="FadeLayer" unique_id=1012668616]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=330842296]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.4)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1715312388]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.88892
+offset_top = -248.0
+offset_right = 440.88892
+offset_bottom = 248.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_hxrwr")
+
+[node name="Buttons" type="Control" parent="." unique_id=792640527]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MainMenu" type="Button" parent="Buttons" unique_id=2002611659]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 807.0
+offset_top = 581.0
+offset_right = 898.0
+offset_bottom = 563.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_5qj7y")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_454ge")
+theme_override_styles/hover = SubResource("StyleBoxFlat_48x61")
+
+[node name="Cancel" type="Button" parent="Buttons" unique_id=1309558225]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 982.0
+offset_top = 581.0
+offset_right = 1073.0
+offset_bottom = 563.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_5qj7y")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_454ge")
+theme_override_styles/hover = SubResource("StyleBoxFlat_48x61")
+
+[connection signal="pressed" from="Buttons/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Buttons/Cancel" to="." method="_on_cancel_pressed"]

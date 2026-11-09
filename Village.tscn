@@ -24,6 +24,8 @@
 [ext_resource type="Texture2D" uid="uid://4qgfkrpn13si" path="res://assets/plaza_assets/assets/bench_north.png" id="21_vhf3d"]
 [ext_resource type="Texture2D" uid="uid://dpbyianou704r" path="res://assets/plaza_assets/assets/bench_south.png" id="22_b7tcu"]
 [ext_resource type="Texture2D" uid="uid://dui07vx8jy5ct" path="res://assets/ui/MediavelFree.png" id="22_el3ue"]
+[ext_resource type="Script" uid="uid://cn4powbli0ca5" path="res://fade.gd" id="25_kchxs"]
+[ext_resource type="PackedScene" uid="uid://c6uiovc1om4dp" path="res://pause_menu.tscn" id="25_rcemk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aixkr"]
 texture = ExtResource("3_b7tcu")
@@ -1277,7 +1279,7 @@ animations = [{
 size = Vector2(12, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eiiio"]
-size = Vector2(9.0000305, 10)
+size = Vector2(9.0000305, 12.214996)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ejx3v"]
 size = Vector2(5, 8.084991)
@@ -1455,7 +1457,7 @@ region_rect = Rect2(55.231106, -0.05397415, 33.31139, 60.25018)
 position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldYSort/Tree3/StaticBody2D" unique_id=542372473]
-position = Vector2(0.034973145, 25.214996)
+position = Vector2(0.034973145, 24.107498)
 shape = SubResource("RectangleShape2D_eiiio")
 
 [node name="Tree4" type="Node2D" parent="WorldYSort" unique_id=554656945]
@@ -1785,52 +1787,35 @@ position = Vector2(0, 10)
 position = Vector2(1.0799866, -12.089996)
 shape = SubResource("RectangleShape2D_2gbdb")
 
-[node name="HouseBrown5" type="Node2D" parent="WorldYSort" unique_id=55016146]
-visible = false
-position = Vector2(469.455, 178.67)
-
-[node name="Sprite2D" type="Sprite2D" parent="WorldYSort/HouseBrown5" unique_id=790322737]
-position = Vector2(1, -26)
-texture = ExtResource("5_kchxs")
-region_enabled = true
-region_rect = Rect2(146.56718, 0, 75.2997, 100.219284)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="WorldYSort/HouseBrown5" unique_id=1615468005]
-position = Vector2(0, 10)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldYSort/HouseBrown5/StaticBody2D" unique_id=600737595]
-position = Vector2(1.0799866, -12.089996)
-shape = SubResource("RectangleShape2D_2gbdb")
-
-[node name="HouseBrown6" type="Node2D" parent="WorldYSort" unique_id=448848402]
+[node name="HouseBrown5" type="Node2D" parent="WorldYSort" unique_id=448848402]
 position = Vector2(471.245, 172.075)
 
-[node name="Sprite2D" type="Sprite2D" parent="WorldYSort/HouseBrown6" unique_id=954970887]
+[node name="Sprite2D" type="Sprite2D" parent="WorldYSort/HouseBrown5" unique_id=954970887]
 position = Vector2(1, -26)
 texture = ExtResource("5_kchxs")
 region_enabled = true
 region_rect = Rect2(146.56718, 0, 75.2997, 100.219284)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="WorldYSort/HouseBrown6" unique_id=1459958417]
+[node name="StaticBody2D" type="StaticBody2D" parent="WorldYSort/HouseBrown5" unique_id=1459958417]
 position = Vector2(0, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldYSort/HouseBrown6/StaticBody2D" unique_id=502858988]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldYSort/HouseBrown5/StaticBody2D" unique_id=502858988]
 position = Vector2(1.0799866, -12.089996)
 shape = SubResource("RectangleShape2D_2gbdb")
 
-[node name="HouseBrown7" type="Node2D" parent="WorldYSort" unique_id=619192026]
+[node name="HouseBrown6" type="Node2D" parent="WorldYSort" unique_id=619192026]
 position = Vector2(807.045, 428.26)
 
-[node name="Sprite2D" type="Sprite2D" parent="WorldYSort/HouseBrown7" unique_id=1792953786]
+[node name="Sprite2D" type="Sprite2D" parent="WorldYSort/HouseBrown6" unique_id=1792953786]
 position = Vector2(1, -26)
 texture = ExtResource("5_kchxs")
 region_enabled = true
 region_rect = Rect2(2.2273712, 0.31863022, 75.2997, 100.219284)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="WorldYSort/HouseBrown7" unique_id=1961212935]
+[node name="StaticBody2D" type="StaticBody2D" parent="WorldYSort/HouseBrown6" unique_id=1961212935]
 position = Vector2(0, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldYSort/HouseBrown7/StaticBody2D" unique_id=1844815998]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldYSort/HouseBrown6/StaticBody2D" unique_id=1844815998]
 position = Vector2(1.0799866, -12.089996)
 shape = SubResource("RectangleShape2D_2gbdb")
 
@@ -2325,6 +2310,7 @@ texture = ExtResource("22_el3ue")
 region_rect = Rect2(0, 0, 75.48889, 93.111115)
 
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1070875874]
+script = ExtResource("25_kchxs")
 
 [node name="ColorRect" type="ColorRect" parent="FadeLayer" unique_id=587747782]
 anchors_preset = 15
@@ -2332,5 +2318,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
+
+[node name="PauseMenu" parent="." unique_id=1709620797 instance=ExtResource("25_rcemk")]

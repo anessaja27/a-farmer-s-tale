@@ -19,25 +19,11 @@
 [ext_resource type="Script" uid="uid://cicsv22uf70v4" path="res://door.gd" id="16_c2bie"]
 [ext_resource type="Texture2D" uid="uid://dpbyianou704r" path="res://assets/plaza_assets/assets/bench_south.png" id="17_pu6uq"]
 [ext_resource type="Texture2D" uid="uid://dui07vx8jy5ct" path="res://assets/ui/MediavelFree.png" id="17_vsw46"]
+[ext_resource type="Script" uid="uid://cn4powbli0ca5" path="res://fade.gd" id="20_g3vh7"]
+[ext_resource type="PackedScene" uid="uid://c6uiovc1om4dp" path="res://pause_menu.tscn" id="21_q5nai"]
 
 [sub_resource type="GDScript" id="GDScript_vsw46"]
 script/source = "extends Node2D
-
-@onready var color_rect: ColorRect = $FadeLayer/ColorRect
-
-func _ready():
-	# Jalankan efek layar terang kembali saat baru masuk ke scene luar
-	fade_in()
-
-func fade_out() -> void:
-	color_rect.mouse_filter = Control.MOUSE_FILTER_STOP
-	var tween = create_tween()
-	await tween.tween_property(color_rect, \"color:a\", 1.0, 0.5).finished
-
-func fade_in() -> void:
-	var tween = create_tween()
-	await tween.tween_property(color_rect, \"color:a\", 0.0, 0.5).finished
-	color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 "
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_osbq7"]
@@ -1570,6 +1556,44 @@ size = Vector2(57, 22)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2gbdb"]
 size = Vector2(29, 63)
 
+[sub_resource type="GDScript" id="GDScript_q5nai"]
+script/source = "extends Area2D
+
+@export var target_scene: String
+@export var spawn_position: Vector2 = Vector2.ZERO
+
+var is_player_in_range: bool = false
+
+func _ready():
+	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
+
+func _on_body_entered(body):
+	if body.is_in_group(\"Player\"):
+		is_player_in_range = true
+
+func _on_body_exited(body):
+	if body.is_in_group(\"Player\"):
+		is_player_in_range = false
+
+func _unhandled_input(event):
+	if is_player_in_range and event.is_action_pressed(\"interact\"):
+		if target_scene != \"\":
+			if spawn_position != Vector2.ZERO:
+				Global.target_spawn_position = spawn_position
+				Global.use_spawn_position = true
+
+			# Jalankan fade out jika parent scene punya fungsinya
+			var main_scene = get_tree().current_scene
+			if main_scene.has_method(\"fade_out\"):
+				await main_scene.fade_out()
+
+			get_tree().change_scene_to_file(target_scene)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q7um4"]
+size = Vector2(30, 59)
+
 [node name="Crossroad" type="Node2D" unique_id=1015703338]
 script = SubResource("GDScript_vsw46")
 
@@ -1902,6 +1926,15 @@ spawn_position = Vector2(66, 365)
 position = Vector2(754.5, 223.5)
 shape = SubResource("RectangleShape2D_2gbdb")
 
+[node name="FarmHouse" type="Area2D" parent="Interactable" unique_id=1082226843]
+script = SubResource("GDScript_q5nai")
+target_scene = "farm_house.tscn"
+spawn_position = Vector2(868, 390)
+
+[node name="Home" type="CollisionShape2D" parent="Interactable/FarmHouse" unique_id=463610051]
+position = Vector2(14, 224.5)
+shape = SubResource("RectangleShape2D_q7um4")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=454126302]
 scale = Vector2(4, 4)
 transform = Transform2D(4, 0, 0, 4, 0, 0)
@@ -1918,6 +1951,7 @@ region_rect = Rect2(0, 0, 75.48889, 93.111115)
 metadata/_edit_lock_ = true
 
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1052594040]
+script = ExtResource("20_g3vh7")
 
 [node name="ColorRect" type="ColorRect" parent="FadeLayer" unique_id=168834589]
 anchors_preset = 15
@@ -1925,5 +1959,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
+
+[node name="PauseMenu" parent="FadeLayer" unique_id=1709620797 instance=ExtResource("21_q5nai")]

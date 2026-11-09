@@ -19,25 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://y3y0mipkpa8i" path="res://assets/plaza_assets/assets/bench_west.png" id="15_raald"]
 [ext_resource type="Texture2D" uid="uid://4qgfkrpn13si" path="res://assets/plaza_assets/assets/bench_north.png" id="16_i481o"]
 [ext_resource type="Texture2D" uid="uid://bhhcbd204m725" path="res://assets/Outdoor decoration/Oak_Tree.png" id="17_258r3"]
+[ext_resource type="Script" uid="uid://cn4powbli0ca5" path="res://fade.gd" id="20_mccbd"]
+[ext_resource type="PackedScene" uid="uid://c6uiovc1om4dp" path="res://pause_menu.tscn" id="21_vsdar"]
 
 [sub_resource type="GDScript" id="GDScript_euokv"]
 script/source = "extends Node2D
-
-@onready var color_rect: ColorRect = $FadeLayer/ColorRect
-
-func _ready():
-	# Jalankan efek layar terang kembali saat baru masuk ke scene luar
-	fade_in()
-
-func fade_out() -> void:
-	color_rect.mouse_filter = Control.MOUSE_FILTER_STOP
-	var tween = create_tween()
-	await tween.tween_property(color_rect, \"color:a\", 1.0, 0.5).finished
-
-func fade_in() -> void:
-	var tween = create_tween()
-	await tween.tween_property(color_rect, \"color:a\", 0.0, 0.5).finished
-	color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
@@ -1165,6 +1151,7 @@ region_rect = Rect2(0, 0, 75.48889, 93.111115)
 metadata/_edit_lock_ = true
 
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1523593323]
+script = ExtResource("20_mccbd")
 
 [node name="ColorRect" type="ColorRect" parent="FadeLayer" unique_id=1501112693]
 anchors_preset = 15
@@ -1172,5 +1159,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
+
+[node name="PauseMenu" parent="FadeLayer" unique_id=1709620797 instance=ExtResource("21_vsdar")]
