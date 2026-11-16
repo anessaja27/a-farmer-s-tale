@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://c22lkt5e3hhyv"]
+
+[ext_resource type="Script" uid="uid://dfuf6odmyosov" path="res://mob.gd" id="1_mpe5k"]
+[ext_resource type="Texture2D" uid="uid://mobn6vq3mfu3" path="res://assets/Farm Animals/Baby Chicken Yellow.png" id="2_mpe5k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6efwa"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyciv"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qv1w3"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjt4x"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bf4hg"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52ohl"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8jqj"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdmt7"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fh74r"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs8y4"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gk8g7"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nptp"]
+atlas = ExtResource("2_mpe5k")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s1p75"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6efwa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyciv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qv1w3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjt4x")
+}],
+"loop": 1,
+"name": &"walk_down",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bf4hg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52ohl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8jqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdmt7")
+}],
+"loop": 1,
+"name": &"walk_left",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fh74r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs8y4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gk8g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nptp")
+}],
+"loop": 1,
+"name": &"walk_up",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1p75"]
+size = Vector2(10, 4)
+
+[node name="baby_chicken" type="CharacterBody2D" unique_id=974660880]
+script = ExtResource("1_mpe5k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2048726320]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_s1p75")
+animation = &"walk_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=531913186]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_s1p75")

@@ -1,0 +1,145 @@
+[gd_scene format=3 uid="uid://bosdmuc87mpco"]
+
+[ext_resource type="Texture2D" uid="uid://cvajy01ghhbrk" path="res://assets/npcs/npcs_separated/middle_aged_man/frames/idle_down_1.png" id="1_j1rmp"]
+[ext_resource type="Texture2D" uid="uid://dn5x132ptv40f" path="res://assets/npcs/npcs_separated/middle_aged_man/frames/idle_down_2.png" id="2_iiunr"]
+[ext_resource type="Texture2D" uid="uid://dg80tk6ybc3w4" path="res://assets/npcs/npcs_separated/middle_aged_man/frames/idle_left_1.png" id="3_054jm"]
+[ext_resource type="Texture2D" uid="uid://dnu0k43uop3p" path="res://assets/npcs/npcs_separated/middle_aged_man/frames/idle_left_2.png" id="4_b5x5p"]
+[ext_resource type="Texture2D" uid="uid://bsogfo778tfvi" path="res://assets/npcs/npcs_separated/middle_aged_man/frames/idle_right_1.png" id="5_2dgld"]
+[ext_resource type="Texture2D" uid="uid://l6gr1bvg8bte" path="res://assets/npcs/npcs_separated/middle_aged_man/frames/idle_right_2.png" id="6_58uf5"]
+[ext_resource type="Texture2D" uid="uid://dt2qx2pmmmg21" path="res://assets/npcs/npcs_separated/middle_aged_man/frames/idle_up_1.png" id="7_b5x5p"]
+[ext_resource type="PackedScene" uid="uid://ce6xp3avocqbn" path="res://interact_ui.tscn" id="7_iiunr"]
+[ext_resource type="Texture2D" uid="uid://dfhj6pjctwdxr" path="res://assets/npcs/npcs_separated/middle_aged_man/frames/idle_up_2.png" id="8_2dgld"]
+
+[sub_resource type="GDScript" id="GDScript_vjb82"]
+script/source = "extends CharacterBody2D
+
+@export var default_direction := \"down\"
+@export var reset_when_player_leaves := true
+
+@onready var interact_area: Area2D = $Area2D
+@onready var prompt: Node2D = $InteractUI
+
+var sprite: AnimatedSprite2D
+var player: Node2D
+var player_near := false
+
+func _ready() -> void:
+	# Finds the NPC's own AnimatedSprite2D, whatever it's named
+	sprite = find_children(\"*\", \"AnimatedSprite2D\", false, false)[0]
+	_play_idle(default_direction)
+	prompt.hide()
+	interact_area.body_entered.connect(_on_body_entered)
+	interact_area.body_exited.connect(_on_body_exited)
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group(\"Player\"):
+		player = body
+		player_near = true
+		prompt.show()
+
+func _on_body_exited(body: Node2D) -> void:
+	if body.is_in_group(\"Player\"):
+		player_near = false
+		prompt.hide()
+		if reset_when_player_leaves:
+			_play_idle(default_direction)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if player_near and event.is_action_pressed(\"interact\"):
+		face_towards(player.global_position)
+		StoryManager.interact_with_npc(\"edi\", \"Edi\")
+		get_viewport().set_input_as_handled()
+
+func face_towards(target: Vector2) -> void:
+	var diff := target - global_position
+	var dir: String
+	if abs(diff.x) > abs(diff.y):
+		dir = \"right\" if diff.x > 0 else \"left\"
+	else:
+		dir = \"down\" if diff.y > 0 else \"up\"
+	_play_idle(dir)
+
+func _play_idle(dir: String) -> void:
+	var anim := \"idle_\" + dir
+	if sprite.sprite_frames.has_animation(anim):
+		sprite.play(anim)
+	else:
+		push_warning(\"%s is missing animation: %s\" % [name, anim])
+"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p0w68"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_j1rmp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_iiunr")
+}],
+"loop": 1,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_054jm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_b5x5p")
+}],
+"loop": 1,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_2dgld")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_58uf5")
+}],
+"loop": 1,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_b5x5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2dgld")
+}],
+"loop": 1,
+"name": &"idle_up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p0w68"]
+size = Vector2(16, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_054jm"]
+size = Vector2(42, 46)
+
+[node name="npcs" type="CharacterBody2D" unique_id=1706646941]
+texture_filter = 1
+script = SubResource("GDScript_vjb82")
+
+[node name="edi" type="AnimatedSprite2D" parent="." unique_id=895812635]
+sprite_frames = SubResource("SpriteFrames_p0w68")
+animation = &"idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2018839636]
+position = Vector2(0, 11.5)
+shape = SubResource("RectangleShape2D_p0w68")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=84697479]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1441051619]
+position = Vector2(1, 10)
+shape = SubResource("RectangleShape2D_054jm")
+
+[node name="InteractUI" parent="." unique_id=798936473 instance=ExtResource("7_iiunr")]
+position = Vector2(0, -25)
+scale = Vector2(0.5, 0.5)
+prompt_animation = "talk"

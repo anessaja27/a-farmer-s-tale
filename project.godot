@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="A Farmer's Tale"
-run/main_scene="res://Village.tscn"
+run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Global="*uid://btm5ko1n0ai8y"
+TimeManager="*uid://cwtsaxfqqvmfv"
+CurfewHandler="*uid://dwcagthbxvkis"
+SaveManager="*uid://ck6oaxn2fgl2"
+StoryManager="*res://story_manager.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]

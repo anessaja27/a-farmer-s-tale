@@ -15,17 +15,29 @@
 [ext_resource type="Texture2D" uid="uid://b7dbdp3h5nrx3" path="res://assets/player/Adventurer.png" id="13_f0iqk"]
 [ext_resource type="Texture2D" uid="uid://pa7ejwwrrspl" path="res://assets/player/pixil-frame-0 (4).png" id="14_w54k4"]
 [ext_resource type="Texture2D" uid="uid://dqqupvos5mwrc" path="res://assets/objects&items/farm objects free.png" id="15_11k0n"]
+[ext_resource type="PackedScene" uid="uid://bosdmuc87mpco" path="res://Edi.tscn" id="15_m7i5o"]
+[ext_resource type="PackedScene" uid="uid://b31asjxhlqd6y" path="res://joko.tscn" id="16_qq8y4"]
 [ext_resource type="Texture2D" uid="uid://d201qhe0xe7sd" path="res://assets/Outdoor decoration/Outdoor_Decor_Free.png" id="16_ytmsh"]
 [ext_resource type="Texture2D" uid="uid://b2f11uh12pdvx" path="res://assets/Outdoor decoration/House_1_Wood_Base_Blue.png" id="17_ir6am"]
 [ext_resource type="Texture2D" uid="uid://dwwliq1sxn8el" path="res://assets/house_blue_back.png" id="18_lc4p5"]
-[ext_resource type="Texture2D" uid="uid://crepupuobqflq" path="res://assets/VillagePack/shop/market_stall_full.png" id="19_bodx1"]
+[ext_resource type="Texture2D" uid="uid://c3ivjacc7w8y7" path="res://assets/VillagePack/shop/market_stall_back.png" id="19_1kecn"]
+[ext_resource type="PackedScene" uid="uid://buvoog4hefort" path="res://shophy.tscn" id="19_57o0r"]
+[ext_resource type="Texture2D" uid="uid://chxee3cxgtqk1" path="res://assets/VillagePack/shop/market_stall_front.png" id="20_1kecn"]
 [ext_resource type="Texture2D" uid="uid://s5c6u6eyso76" path="res://assets/VillagePack/shop/shipping_bin.png" id="20_8yeli"]
 [ext_resource type="Script" uid="uid://cicsv22uf70v4" path="res://door.gd" id="21_kr64o"]
 [ext_resource type="Texture2D" uid="uid://4qgfkrpn13si" path="res://assets/plaza_assets/assets/bench_north.png" id="21_vhf3d"]
 [ext_resource type="Texture2D" uid="uid://dpbyianou704r" path="res://assets/plaza_assets/assets/bench_south.png" id="22_b7tcu"]
-[ext_resource type="Texture2D" uid="uid://dui07vx8jy5ct" path="res://assets/ui/MediavelFree.png" id="22_el3ue"]
+[ext_resource type="PackedScene" uid="uid://ce6xp3avocqbn" path="res://interact_ui.tscn" id="24_3b3hk"]
+[ext_resource type="PackedScene" uid="uid://cuisyc6gkmna3" path="res://hud.tscn" id="24_kchxs"]
 [ext_resource type="Script" uid="uid://cn4powbli0ca5" path="res://fade.gd" id="25_kchxs"]
 [ext_resource type="PackedScene" uid="uid://c6uiovc1om4dp" path="res://pause_menu.tscn" id="25_rcemk"]
+[ext_resource type="PackedScene" uid="uid://bgakshy1svmnv" path="res://chicken.tscn" id="27_qq8y4"]
+[ext_resource type="PackedScene" uid="uid://bf11h0nl8ernb" path="res://chicken2.tscn" id="28_51opm"]
+[ext_resource type="PackedScene" uid="uid://ctsx0i6hg4nsm" path="res://male_cow.tscn" id="28_f0iqk"]
+[ext_resource type="PackedScene" uid="uid://bwyonx0r03ged" path="res://female_cow.tscn" id="28_w54k4"]
+[ext_resource type="PackedScene" uid="uid://c22lkt5e3hhyv" path="res://baby_chicken.tscn" id="30_11k0n"]
+[ext_resource type="PackedScene" uid="uid://cy27egj5dhr7d" path="res://villager.tscn" id="32_ir6am"]
+[ext_resource type="PackedScene" uid="uid://1mtdnfbksff7" path="res://Fvillager.tscn" id="33_lc4p5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aixkr"]
 texture = ExtResource("3_b7tcu")
@@ -1411,6 +1423,12 @@ limit_top = 0
 limit_right = 960
 limit_bottom = 768
 
+[node name="npcs2" parent="WorldYSort" unique_id=2011648038 instance=ExtResource("15_m7i5o")]
+position = Vector2(663, 188)
+
+[node name="npcs" parent="WorldYSort" unique_id=1706646941 instance=ExtResource("16_qq8y4")]
+position = Vector2(876, 193)
+
 [node name="Tree1" type="Node2D" parent="WorldYSort" unique_id=822623934]
 position = Vector2(232, 265.185)
 
@@ -1822,9 +1840,16 @@ shape = SubResource("RectangleShape2D_2gbdb")
 [node name="ShopStall" type="Node2D" parent="WorldYSort" unique_id=946158428]
 position = Vector2(348.065, 269.23)
 
+[node name="Sprite2D2" type="Sprite2D" parent="WorldYSort/ShopStall" unique_id=1599131374]
+position = Vector2(-0.06500244, -12.230011)
+texture = ExtResource("19_1kecn")
+
+[node name="npcs" parent="WorldYSort/ShopStall" unique_id=1862965134 instance=ExtResource("19_57o0r")]
+position = Vector2(-0.06500244, -4.230011)
+
 [node name="Sprite2D" type="Sprite2D" parent="WorldYSort/ShopStall" unique_id=512759021]
 position = Vector2(-0.06500244, -12.230011)
-texture = ExtResource("19_bodx1")
+texture = ExtResource("20_1kecn")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="WorldYSort/ShopStall" unique_id=578591559]
 
@@ -2208,6 +2233,45 @@ position = Vector2(0, 3)
 position = Vector2(-0.6749878, 1.4849854)
 shape = SubResource("RectangleShape2D_rcemk")
 
+[node name="chicken" parent="WorldYSort" unique_id=974660880 instance=ExtResource("27_qq8y4")]
+position = Vector2(139, 443)
+
+[node name="chicken2" parent="WorldYSort" unique_id=253942177 instance=ExtResource("28_51opm")]
+position = Vector2(163, 414)
+
+[node name="male_cow" parent="WorldYSort" unique_id=602375866 instance=ExtResource("28_f0iqk")]
+position = Vector2(84.000015, 408)
+
+[node name="baby_chicken" parent="WorldYSort" unique_id=1851254947 instance=ExtResource("30_11k0n")]
+position = Vector2(120, 429)
+
+[node name="female_cow" parent="WorldYSort" unique_id=1787228927 instance=ExtResource("28_w54k4")]
+position = Vector2(184, 438)
+
+[node name="Villager" parent="WorldYSort" unique_id=327342352 instance=ExtResource("32_ir6am")]
+position = Vector2(321, 351)
+
+[node name="Villager2" parent="WorldYSort" unique_id=452847550 instance=ExtResource("32_ir6am")]
+position = Vector2(379, 643)
+
+[node name="Villager4" parent="WorldYSort" unique_id=1709519484 instance=ExtResource("32_ir6am")]
+position = Vector2(589, 643)
+
+[node name="Villager8" parent="WorldYSort" unique_id=1440265532 instance=ExtResource("32_ir6am")]
+position = Vector2(144, 490)
+
+[node name="Villager5" parent="WorldYSort" unique_id=758413208 instance=ExtResource("33_lc4p5")]
+position = Vector2(108, 306)
+
+[node name="Villager6" parent="WorldYSort" unique_id=1091288672 instance=ExtResource("33_lc4p5")]
+position = Vector2(586, 409)
+
+[node name="Villager7" parent="WorldYSort" unique_id=752243635 instance=ExtResource("33_lc4p5")]
+position = Vector2(393, 120)
+
+[node name="Villager3" parent="WorldYSort" unique_id=1467956411 instance=ExtResource("32_ir6am")]
+position = Vector2(754, 353)
+
 [node name="CollisionObjects" type="Node2D" parent="." unique_id=652189081]
 
 [node name="MapObstacles" type="StaticBody2D" parent="CollisionObjects" unique_id=1584052751]
@@ -2286,30 +2350,24 @@ shape = SubResource("RectangleShape2D_lqu64")
 [node name="CrossroadExit" type="Area2D" parent="Interactables" unique_id=1680359403]
 script = ExtResource("21_kr64o")
 target_scene = "CrossRoad.tscn"
-spawn_position = Vector2(383, 15)
+spawn_position = Vector2(385, 35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/CrossroadExit" unique_id=1586625161]
 position = Vector2(488, 692)
 shape = SubResource("RectangleShape2D_c580v")
 
+[node name="InteractUI" parent="Interactables/CrossroadExit" unique_id=798936473 instance=ExtResource("24_3b3hk")]
+position = Vector2(488, 650)
+scale = Vector2(0.5, 0.5)
+prompt_animation = "exit"
+
 [node name="Foreground" type="Node2D" parent="." unique_id=2057511060]
 z_index = 10
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1012909481]
-scale = Vector2(4, 4)
-transform = Transform2D(4, 0, 0, 4, 0, 0)
-
-[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer" unique_id=926364471]
-offset_left = 437.25
-offset_top = -3.25
-offset_right = 477.25
-offset_bottom = 51.75
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("22_el3ue")
-region_rect = Rect2(0, 0, 75.48889, 93.111115)
+[node name="HUD" parent="." unique_id=301342831 instance=ExtResource("24_kchxs")]
 
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1070875874]
+layer = 10
 script = ExtResource("25_kchxs")
 
 [node name="ColorRect" type="ColorRect" parent="FadeLayer" unique_id=587747782]

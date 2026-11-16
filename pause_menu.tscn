@@ -3,70 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://c6idwa272rqf6" path="res://assets/ui/ui_only/pause_menu.png" id="1_hdmo1"]
 [ext_resource type="PackedScene" uid="uid://c1xdk82cxo1p4" path="res://quit_confirm_menu.tscn" id="2_nwcfo"]
 [ext_resource type="PackedScene" uid="uid://8riu1v6plhqu" path="res://main_menu_confirm.tscn" id="3_05uyy"]
-
-[sub_resource type="GDScript" id="GDScript_p81d2"]
-script/source = "extends CanvasLayer
-
-@onready var root: Control = $root
-@onready var quit_confirm: Control = $root/QuitConfirmMenu
-@onready var main_menu_confirm: Control = $root/MainMenuConfirm
-
-
-func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	root.hide()
-	quit_confirm.hide()
-	main_menu_confirm.hide()
-
-
-func _input(event):
-	if event.is_action_pressed(\"ui_cancel\") and not event.is_echo():
-
-		# Close confirmation first if it's open
-		if quit_confirm.visible:
-			quit_confirm.hide()
-
-		elif main_menu_confirm.visible:
-			main_menu_confirm.hide()
-
-		else:
-			toggle_pause()
-
-		get_viewport().set_input_as_handled()
-
-
-func toggle_pause():
-	var is_paused = not get_tree().paused
-
-	get_tree().paused = is_paused
-	root.visible = is_paused
-
-
-func resume_game():
-	get_tree().paused = false
-	root.hide()
-	quit_confirm.hide()
-	main_menu_confirm.hide()
-
-
-# Quit Game button
-func _on_quit_game_pressed():
-	quit_confirm.show()
-
-
-# YES button
-func _on_quit_button_pressed():
-	get_tree().quit()
-
-
-# NO button
-func _on_cancel_button_pressed():
-	quit_confirm.hide()
-
-
-func _on_main_menu_pressed() -> void:
-	main_menu_confirm.show()
-"
+[ext_resource type="PackedScene" path="res://save_menu.tscn" id="4_save"]
+[ext_resource type="Script" path="res://pause_menu.gd" id="5_script"]
+[ext_resource type="PackedScene" path="res://settings_menu.tscn" id="6_settings"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdmo1"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -79,8 +18,8 @@ bg_color = Color(0, 0, 0, 0)
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=1709620797]
 process_mode = 3
-layer = 10
-script = SubResource("GDScript_p81d2")
+layer = 20
+script = ExtResource("5_script")
 
 [node name="root" type="Control" parent="." unique_id=2056289273]
 layout_mode = 3
@@ -245,6 +184,17 @@ visible = false
 layout_mode = 1
 metadata/_edit_lock_ = true
 
+[node name="SaveMenu" parent="root" instance=ExtResource("4_save")]
+visible = false
+layout_mode = 1
+
+[node name="SettingsMenu" parent="root" instance=ExtResource("6_settings")]
+visible = false
+layout_mode = 1
+
 [connection signal="pressed" from="root/Pause Screen/Buttons/Resume" to="." method="resume_game"]
+[connection signal="pressed" from="root/Pause Screen/Buttons/SaveGame" to="." method="open_save_menu"]
+[connection signal="pressed" from="root/Pause Screen/Buttons/LoadGame" to="." method="open_load_menu"]
+[connection signal="pressed" from="root/Pause Screen/Buttons/Settings" to="." method="open_settings_menu"]
 [connection signal="pressed" from="root/Pause Screen/Buttons/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="root/Pause Screen/Buttons/QuitGame" to="." method="_on_quit_game_pressed"]

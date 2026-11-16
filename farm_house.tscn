@@ -16,10 +16,15 @@
 [ext_resource type="Texture2D" uid="uid://cjf8dkixqp41d" path="res://assets/Vegetation/Trees 3.png" id="14_n6hu4"]
 [ext_resource type="Texture2D" uid="uid://bhhcbd204m725" path="res://assets/Outdoor decoration/Oak_Tree.png" id="15_uhiwl"]
 [ext_resource type="Texture2D" uid="uid://ff5p11fiyn50" path="res://assets/Objects/Fence's copiar.png" id="16_uhiwl"]
+[ext_resource type="PackedScene" uid="uid://c22lkt5e3hhyv" path="res://baby_chicken.tscn" id="17_234rp"]
 [ext_resource type="Texture2D" uid="uid://c3t3hfx5suncf" path="res://assets/farm_assets_pack/buildings/chicken_coop.png" id="17_xbn81"]
-[ext_resource type="Texture2D" uid="uid://dui07vx8jy5ct" path="res://assets/ui/MediavelFree.png" id="18_8ao47"]
+[ext_resource type="Script" uid="uid://cicsv22uf70v4" path="res://door.gd" id="18_lofo3"]
+[ext_resource type="PackedScene" uid="uid://bf11h0nl8ernb" path="res://chicken2.tscn" id="18_vt86x"]
 [ext_resource type="Script" uid="uid://cn4powbli0ca5" path="res://fade.gd" id="19_lofo3"]
+[ext_resource type="PackedScene" uid="uid://ce6xp3avocqbn" path="res://interact_ui.tscn" id="19_r5hoq"]
+[ext_resource type="PackedScene" uid="uid://bgakshy1svmnv" path="res://chicken.tscn" id="19_u6noa"]
 [ext_resource type="PackedScene" uid="uid://c6uiovc1om4dp" path="res://pause_menu.tscn" id="20_r5hoq"]
+[ext_resource type="PackedScene" uid="uid://cuisyc6gkmna3" path="res://hud.tscn" id="21_lofo3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
 atlas = ExtResource("6_n6hu4")
@@ -672,43 +677,14 @@ size = Vector2(4, 129.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5enw0"]
 size = Vector2(4, 129.75)
 
-[sub_resource type="GDScript" id="GDScript_c580v"]
-script/source = "extends Area2D
-
-@export var target_scene: String
-@export var spawn_position: Vector2 = Vector2.ZERO
-
-var is_player_in_range: bool = false
-
-func _ready():
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
-
-func _on_body_entered(body):
-	if body.is_in_group(\"Player\"):
-		is_player_in_range = true
-
-func _on_body_exited(body):
-	if body.is_in_group(\"Player\"):
-		is_player_in_range = false
-
-func _unhandled_input(event):
-	if is_player_in_range and event.is_action_pressed(\"interact\"):
-		if target_scene != \"\":
-			if spawn_position != Vector2.ZERO:
-				Global.target_spawn_position = spawn_position
-				Global.use_spawn_position = true
-
-			# Jalankan fade out jika parent scene punya fungsinya
-			var main_scene = get_tree().current_scene
-			if main_scene.has_method(\"fade_out\"):
-				await main_scene.fade_out()
-
-			get_tree().change_scene_to_file(target_scene)
-"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rlxod"]
-size = Vector2(30, 49)
+size = Vector2(41, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2gbdb"]
+size = Vector2(25, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q7um4"]
+size = Vector2(25, 26)
 
 [node name="FarmHouse" type="Node2D" unique_id=377148521]
 
@@ -1452,6 +1428,30 @@ position = Vector2(-32, 2)
 position = Vector2(104.59, 4.994995)
 shape = SubResource("RectangleShape2D_ofxpb")
 
+[node name="baby_chicken" parent="WorldYSort" unique_id=974660880 instance=ExtResource("17_234rp")]
+position = Vector2(427, 276)
+
+[node name="baby_chicken2" parent="WorldYSort" unique_id=1864639624 instance=ExtResource("17_234rp")]
+position = Vector2(511, 289)
+
+[node name="baby_chicken3" parent="WorldYSort" unique_id=36248448 instance=ExtResource("17_234rp")]
+position = Vector2(499, 243)
+
+[node name="baby_chicken4" parent="WorldYSort" unique_id=899496501 instance=ExtResource("17_234rp")]
+position = Vector2(413, 243)
+
+[node name="chicken" parent="WorldYSort" unique_id=1607970976 instance=ExtResource("18_vt86x")]
+position = Vector2(424, 234)
+
+[node name="chicken2" parent="WorldYSort" unique_id=558707211 instance=ExtResource("18_vt86x")]
+position = Vector2(519, 262)
+
+[node name="chicken3" parent="WorldYSort" unique_id=1085121394 instance=ExtResource("19_u6noa")]
+position = Vector2(491, 278)
+
+[node name="chicken4" parent="WorldYSort" unique_id=1442876822 instance=ExtResource("19_u6noa")]
+position = Vector2(413, 297)
+
 [node name="Fences7" type="Node2D" parent="WorldYSort" unique_id=1772792982]
 position = Vector2(439.87, 325.68)
 
@@ -1596,30 +1596,51 @@ shape = SubResource("RectangleShape2D_5enw0")
 [node name="Interactable" type="Node2D" parent="." unique_id=2013079473]
 
 [node name="CrossroadEntrance" type="Area2D" parent="Interactable" unique_id=1435738048]
-script = SubResource("GDScript_c580v")
+script = ExtResource("18_lofo3")
 target_scene = "CrossRoad.tscn"
-spawn_position = Vector2(38, 224)
+spawn_position = Vector2(33, 226)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable/CrossroadEntrance" unique_id=1528838046]
-position = Vector2(896, 392.5)
+position = Vector2(890.5, 392.5)
 shape = SubResource("RectangleShape2D_rlxod")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1696825067]
-scale = Vector2(4, 4)
-transform = Transform2D(4, 0, 0, 4, 0, 0)
+[node name="InteractUI" parent="Interactable/CrossroadEntrance" unique_id=798936473 instance=ExtResource("19_r5hoq")]
+position = Vector2(873, 362)
+scale = Vector2(0.5, 0.5)
+prompt_animation = "exit"
 
-[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer" unique_id=1745016424]
-offset_left = 437.25
-offset_top = -3.25
-offset_right = 477.25
-offset_bottom = 51.75
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("18_8ao47")
-region_rect = Rect2(0, 0, 75.48889, 93.111115)
-metadata/_edit_lock_ = true
+[node name="HouseEntrance" type="Area2D" parent="Interactable" unique_id=219100419]
+script = ExtResource("18_lofo3")
+target_scene = "house_interior.tscn"
+spawn_position = Vector2(112, 159)
+travel_cost_minutes = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable/HouseEntrance" unique_id=1802016692]
+position = Vector2(240.5, 232)
+shape = SubResource("RectangleShape2D_2gbdb")
+
+[node name="InteractUI" parent="Interactable/HouseEntrance" unique_id=1741619235 instance=ExtResource("19_r5hoq")]
+position = Vector2(241, 211)
+scale = Vector2(0.5, 0.5)
+
+[node name="StorageRoom" type="Area2D" parent="Interactable" unique_id=213500193]
+script = ExtResource("18_lofo3")
+target_scene = "storage_room.tscn"
+spawn_position = Vector2(88, 140)
+travel_cost_minutes = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable/StorageRoom" unique_id=865758310]
+position = Vector2(170.5, 231)
+shape = SubResource("RectangleShape2D_q7um4")
+
+[node name="InteractUI" parent="Interactable/StorageRoom" unique_id=841793961 instance=ExtResource("19_r5hoq")]
+position = Vector2(171, 211)
+scale = Vector2(0.5, 0.5)
+
+[node name="HUD" parent="." unique_id=1367199903 instance=ExtResource("21_lofo3")]
 
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1693737131]
+layer = 10
 script = ExtResource("19_lofo3")
 
 [node name="ColorRect" type="ColorRect" parent="FadeLayer" unique_id=1799913517]

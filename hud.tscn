@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://cuisyc6gkmna3"]
+
+[ext_resource type="Texture2D" uid="uid://dui07vx8jy5ct" path="res://assets/ui/MediavelFree.png" id="1_64ctp"]
+[ext_resource type="FontFile" uid="uid://dbn2kddfegr6s" path="res://assets/font/m6x11.ttf" id="2_64ctp"]
+
+[sub_resource type="GDScript" id="GDScript_vjb82"]
+script/source = "extends CanvasLayer
+
+@onready var day_label: Label = %DayLabel
+@onready var time_label: Label = %TimeLabel
+
+func _ready() -> void:
+	TimeManager.time_changed.connect(_refresh)
+	_refresh()
+
+func _refresh(_h: int = 0, _m: int = 0) -> void:
+	day_label.text = \"Day %d\" % TimeManager.day
+	time_label.text = TimeManager.get_time_text()
+"
+
+[node name="HUD" type="CanvasLayer" unique_id=1367199903]
+script = SubResource("GDScript_vjb82")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1471880654]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.01501
+offset_right = -71.015015
+offset_bottom = 93.0
+grow_horizontal = 0
+scale = Vector2(2, 2)
+texture = ExtResource("1_64ctp")
+region_rect = Rect2(2.9052544, 0, 71.23848, 93.243935)
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect" unique_id=1253082143]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 32.0
+offset_right = 61.0
+offset_bottom = 82.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer" unique_id=1842409303]
+layout_mode = 2
+
+[node name="DayLabel" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer" unique_id=1880311563]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_64ctp")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer" unique_id=2111333621]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_64ctp")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1

@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://ctsx0i6hg4nsm"]
+
+[ext_resource type="Script" uid="uid://dfuf6odmyosov" path="res://mob.gd" id="1_yj05v"]
+[ext_resource type="Texture2D" uid="uid://c1kdi6aufh6hw" path="res://assets/Farm Animals/Male Cow Brown.png" id="2_bnp4l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnp4l"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_no3h4"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tn6lo"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cwse"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0e3q"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36ybt"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lwyl"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nr1sc"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1a1k"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jnev"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7q7r7"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7p461"]
+atlas = ExtResource("2_bnp4l")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rxdei"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnp4l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_no3h4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tn6lo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cwse")
+}],
+"loop": 1,
+"name": &"walk_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0e3q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36ybt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lwyl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nr1sc")
+}],
+"loop": 1,
+"name": &"walk_left",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1a1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jnev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7q7r7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7p461")
+}],
+"loop": 1,
+"name": &"walk_up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1p75"]
+size = Vector2(17, 13.4)
+
+[node name="male_cow" type="CharacterBody2D" unique_id=974660880]
+texture_filter = 1
+scale = Vector2(1.25, 1.25)
+script = ExtResource("1_yj05v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2048726320]
+sprite_frames = SubResource("SpriteFrames_rxdei")
+animation = &"walk_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=531913186]
+position = Vector2(-0.4999999, 8.299998)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_s1p75")

@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://ce6xp3avocqbn"]
+
+[ext_resource type="Texture2D" uid="uid://c2iasl83ckild" path="res://assets/interact_prompt_E/interact_E_key.png" id="1_7wlxc"]
+[ext_resource type="Texture2D" uid="uid://dp188wgfmj8g" path="res://assets/interact_prompt_E/interact_E_key_pressed.png" id="2_2tsgi"]
+[ext_resource type="Texture2D" uid="uid://b83by8luk5el" path="res://assets/interact_prompt_E/prompts/prompt_E_enter.png" id="3_nput6"]
+[ext_resource type="Texture2D" uid="uid://dtga61i6xn68k" path="res://assets/interact_prompt_E/prompts/prompt_E_enter_pressed.png" id="4_sqkxf"]
+[ext_resource type="Texture2D" uid="uid://be6xwecer4sr4" path="res://assets/interact_prompt_E/prompts/prompt_E_harvest.png" id="5_122mp"]
+[ext_resource type="Texture2D" uid="uid://8nx5jd7whomu" path="res://assets/interact_prompt_E/prompts/prompt_E_exit.png" id="5_nput6"]
+[ext_resource type="Texture2D" uid="uid://3c0fuf6tb4lc" path="res://assets/interact_prompt_E/prompts/prompt_E_harvest_pressed.png" id="6_nchoh"]
+[ext_resource type="Texture2D" uid="uid://dcd6rr8ftqkmu" path="res://assets/interact_prompt_E/prompts/prompt_E_exit_pressed.png" id="6_sqkxf"]
+[ext_resource type="Texture2D" uid="uid://beyoia270qpr" path="res://assets/interact_prompt_E/prompts/prompt_E_open.png" id="7_bpywr"]
+[ext_resource type="Texture2D" uid="uid://cq7oeavnyogim" path="res://assets/interact_prompt_E/prompts/prompt_E_open_pressed.png" id="8_rxics"]
+[ext_resource type="Texture2D" uid="uid://bglsetiwdsoag" path="res://assets/interact_prompt_E/prompts/prompt_E_pick_up.png" id="9_oaiag"]
+[ext_resource type="Texture2D" uid="uid://bc8haf2d075jf" path="res://assets/interact_prompt_E/prompts/prompt_E_pick_up_pressed.png" id="10_ut3tw"]
+[ext_resource type="Texture2D" uid="uid://71w07xj3lfv0" path="res://assets/interact_prompt_E/prompts/prompt_E_sleep.png" id="11_yqowg"]
+[ext_resource type="Texture2D" uid="uid://b6ijkua66jepp" path="res://assets/interact_prompt_E/prompts/prompt_E_sleep_pressed.png" id="12_utosu"]
+[ext_resource type="Texture2D" uid="uid://ctb8b8o15xmh5" path="res://assets/interact_prompt_E/prompts/prompt_E_talk.png" id="13_aeq8d"]
+[ext_resource type="Texture2D" uid="uid://cg3qyl2lj4xs6" path="res://assets/interact_prompt_E/prompts/prompt_E_talk_pressed.png" id="14_hv5gv"]
+
+[sub_resource type="GDScript" id="GDScript_vjb82"]
+script/source = "extends Node2D
+
+@export_enum(\"enter\", \"harvest\", \"open\", \"pick_up\", \"sleep\", \"talk\", \"exit\") var prompt_animation: String = \"enter\"
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+func _ready() -> void:
+	hide()   # sembunyi sampai player dekat
+	visibility_changed.connect(_on_visibility_changed)
+
+func _on_visibility_changed() -> void:
+	if visible:
+		sprite.play(prompt_animation)
+	else:
+		sprite.stop()
+"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s1p75"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7wlxc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2tsgi")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_nput6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sqkxf")
+}],
+"loop": 1,
+"name": &"enter",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_nput6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sqkxf")
+}],
+"loop": 1,
+"name": &"exit",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_122mp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nchoh")
+}],
+"loop": 1,
+"name": &"harvest",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_bpywr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_rxics")
+}],
+"loop": 1,
+"name": &"open",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_oaiag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ut3tw")
+}],
+"loop": 1,
+"name": &"pick_up",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_yqowg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_utosu")
+}],
+"loop": 1,
+"name": &"sleep",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_aeq8d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_hv5gv")
+}],
+"loop": 1,
+"name": &"talk",
+"speed": 2.0
+}]
+
+[node name="InteractUI" type="Node2D" unique_id=798936473]
+texture_filter = 1
+script = SubResource("GDScript_vjb82")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1460709714]
+sprite_frames = SubResource("SpriteFrames_s1p75")
+animation = &"exit"
+frame_progress = 0.76100594

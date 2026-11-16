@@ -12,15 +12,17 @@
 [ext_resource type="Texture2D" uid="uid://d201qhe0xe7sd" path="res://assets/Outdoor decoration/Outdoor_Decor_Free.png" id="10_e1kgf"]
 [ext_resource type="TileSet" uid="uid://hwsjnjn7r07q" path="res://patches.tres" id="10_osbq7"]
 [ext_resource type="Script" uid="uid://05d1rld2dti7" path="res://character_body_2d.gd" id="11_8ilqx"]
+[ext_resource type="PackedScene" uid="uid://cewenbodyt7cm" path="res://Cak Jon.tscn" id="11_y0cae"]
 [ext_resource type="Script" uid="uid://dxikips551n0v" path="res://tile_indicator.gd" id="12_c2bie"]
 [ext_resource type="Texture2D" uid="uid://wfcrk3y3p0bp" path="res://assets/player/shadow.png" id="13_vsw46"]
 [ext_resource type="Texture2D" uid="uid://b7dbdp3h5nrx3" path="res://assets/player/Adventurer.png" id="14_osbq7"]
 [ext_resource type="Texture2D" uid="uid://pa7ejwwrrspl" path="res://assets/player/pixil-frame-0 (4).png" id="15_pu6uq"]
 [ext_resource type="Script" uid="uid://cicsv22uf70v4" path="res://door.gd" id="16_c2bie"]
 [ext_resource type="Texture2D" uid="uid://dpbyianou704r" path="res://assets/plaza_assets/assets/bench_south.png" id="17_pu6uq"]
-[ext_resource type="Texture2D" uid="uid://dui07vx8jy5ct" path="res://assets/ui/MediavelFree.png" id="17_vsw46"]
 [ext_resource type="Script" uid="uid://cn4powbli0ca5" path="res://fade.gd" id="20_g3vh7"]
+[ext_resource type="PackedScene" uid="uid://cuisyc6gkmna3" path="res://hud.tscn" id="21_fiady"]
 [ext_resource type="PackedScene" uid="uid://c6uiovc1om4dp" path="res://pause_menu.tscn" id="21_q5nai"]
+[ext_resource type="PackedScene" uid="uid://ce6xp3avocqbn" path="res://interact_ui.tscn" id="21_y0cae"]
 
 [sub_resource type="GDScript" id="GDScript_vsw46"]
 script/source = "extends Node2D
@@ -1556,41 +1558,6 @@ size = Vector2(57, 22)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2gbdb"]
 size = Vector2(29, 63)
 
-[sub_resource type="GDScript" id="GDScript_q5nai"]
-script/source = "extends Area2D
-
-@export var target_scene: String
-@export var spawn_position: Vector2 = Vector2.ZERO
-
-var is_player_in_range: bool = false
-
-func _ready():
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
-
-func _on_body_entered(body):
-	if body.is_in_group(\"Player\"):
-		is_player_in_range = true
-
-func _on_body_exited(body):
-	if body.is_in_group(\"Player\"):
-		is_player_in_range = false
-
-func _unhandled_input(event):
-	if is_player_in_range and event.is_action_pressed(\"interact\"):
-		if target_scene != \"\":
-			if spawn_position != Vector2.ZERO:
-				Global.target_spawn_position = spawn_position
-				Global.use_spawn_position = true
-
-			# Jalankan fade out jika parent scene punya fungsinya
-			var main_scene = get_tree().current_scene
-			if main_scene.has_method(\"fade_out\"):
-				await main_scene.fade_out()
-
-			get_tree().change_scene_to_file(target_scene)
-"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q7um4"]
 size = Vector2(30, 59)
 
@@ -1612,6 +1579,9 @@ tile_set = ExtResource("10_osbq7")
 [node name="WorldYSort" type="Node2D" parent="." unique_id=435211598]
 y_sort_enabled = true
 texture_filter = 1
+
+[node name="npcs" parent="WorldYSort" unique_id=1706646941 instance=ExtResource("11_y0cae")]
+position = Vector2(728, 177)
 
 [node name="Player" type="CharacterBody2D" parent="WorldYSort" unique_id=2141583979 groups=["Player"]]
 position = Vector2(38, 223)
@@ -1905,52 +1875,51 @@ shape = SubResource("RectangleShape2D_u3ad5")
 [node name="TOP_BORDER" type="CollisionShape2D" parent="Collisions Object/StaticBody2D" unique_id=1048977428]
 position = Vector2(381.5, 9)
 shape = SubResource("RectangleShape2D_ejx3v")
+metadata/_edit_lock_ = true
 
 [node name="Interactable" type="Node2D" parent="." unique_id=1251273891]
 
 [node name="Village_Path" type="Area2D" parent="Interactable" unique_id=927583526]
 script = ExtResource("16_c2bie")
 target_scene = "Village.tscn"
-spawn_position = Vector2(488, 664)
+spawn_position = Vector2(480, 650)
 
 [node name="Village_Entrance" type="CollisionShape2D" parent="Interactable/Village_Path" unique_id=1106576797]
 position = Vector2(384, 29)
 shape = SubResource("RectangleShape2D_4ddqd")
 
+[node name="InteractUI" parent="Interactable/Village_Path" unique_id=798936473 instance=ExtResource("21_y0cae")]
+position = Vector2(384, 10)
+scale = Vector2(0.5, 0.5)
+
 [node name="PlazaPath" type="Area2D" parent="Interactable" unique_id=616298750]
 script = ExtResource("16_c2bie")
 target_scene = "Plaza.tscn"
-spawn_position = Vector2(66, 365)
+spawn_position = Vector2(65, 370)
 
 [node name="Plaza_Entrance" type="CollisionShape2D" parent="Interactable/PlazaPath" unique_id=443374901]
 position = Vector2(754.5, 223.5)
 shape = SubResource("RectangleShape2D_2gbdb")
 
+[node name="InteractUI" parent="Interactable/PlazaPath" unique_id=609071843 instance=ExtResource("21_y0cae")]
+position = Vector2(755, 186)
+scale = Vector2(0.5, 0.5)
+
 [node name="FarmHouse" type="Area2D" parent="Interactable" unique_id=1082226843]
-script = SubResource("GDScript_q5nai")
+script = ExtResource("16_c2bie")
 target_scene = "farm_house.tscn"
-spawn_position = Vector2(868, 390)
+spawn_position = Vector2(865, 390)
 
 [node name="Home" type="CollisionShape2D" parent="Interactable/FarmHouse" unique_id=463610051]
 position = Vector2(14, 224.5)
 shape = SubResource("RectangleShape2D_q7um4")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=454126302]
-scale = Vector2(4, 4)
-transform = Transform2D(4, 0, 0, 4, 0, 0)
-
-[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer" unique_id=562311454]
-offset_left = 437.25
-offset_top = -3.25
-offset_right = 477.25
-offset_bottom = 51.75
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("17_vsw46")
-region_rect = Rect2(0, 0, 75.48889, 93.111115)
-metadata/_edit_lock_ = true
+[node name="InteractUI" parent="Interactable/FarmHouse" unique_id=1554421946 instance=ExtResource("21_y0cae")]
+position = Vector2(17, 187)
+scale = Vector2(0.5, 0.5)
 
 [node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1052594040]
+layer = 10
 script = ExtResource("20_g3vh7")
 
 [node name="ColorRect" type="ColorRect" parent="FadeLayer" unique_id=168834589]
@@ -1964,3 +1933,5 @@ color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
 
 [node name="PauseMenu" parent="FadeLayer" unique_id=1709620797 instance=ExtResource("21_q5nai")]
+
+[node name="HUD" parent="." unique_id=1367199903 instance=ExtResource("21_fiady")]
