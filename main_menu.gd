@@ -21,32 +21,32 @@ func _ready() -> void:
 
 
 func _style_menu_buttons() -> void:
+	# The button artwork is already part of the background texture.
+	# Keep these Buttons as invisible hitboxes: no border or default focus outline.
 	var normal_style := StyleBoxFlat.new()
 	normal_style.bg_color = Color(0.25, 0.13, 0.07, 0.0)
-	normal_style.set_corner_radius_all(9)
 	normal_style.set_border_width_all(0)
+	normal_style.set_corner_radius_all(0)
 
 	var hover_style := StyleBoxFlat.new()
-	hover_style.bg_color = Color(0.35, 0.18, 0.08, 0.12)
-	hover_style.border_color = Color("#fff0c9")
-	hover_style.set_border_width_all(3)
-	hover_style.set_corner_radius_all(9)
+	hover_style.bg_color = Color(1.0, 0.92, 0.72, 0.07)
+	hover_style.set_border_width_all(0)
+	hover_style.set_corner_radius_all(0)
 
 	var pressed_style := StyleBoxFlat.new()
-	pressed_style.bg_color = Color(0.35, 0.18, 0.08, 0.24)
-	pressed_style.border_color = Color("#9b5e34")
-	pressed_style.set_border_width_all(3)
-	pressed_style.set_corner_radius_all(9)
+	pressed_style.bg_color = Color(0.20, 0.10, 0.04, 0.14)
+	pressed_style.set_border_width_all(0)
+	pressed_style.set_corner_radius_all(0)
 
 	var focus_style := StyleBoxFlat.new()
-	focus_style.bg_color = Color(0.35, 0.18, 0.08, 0.08)
-	focus_style.border_color = Color("#fff0c9")
-	focus_style.set_border_width_all(3)
-	focus_style.set_corner_radius_all(9)
+	focus_style.bg_color = Color(1.0, 0.92, 0.72, 0.045)
+	focus_style.set_border_width_all(0)
+	focus_style.set_corner_radius_all(0)
 
 	var disabled_style := StyleBoxFlat.new()
-	disabled_style.bg_color = Color(0.18, 0.14, 0.11, 0.34)
-	disabled_style.set_corner_radius_all(9)
+	disabled_style.bg_color = Color(0.18, 0.14, 0.11, 0.30)
+	disabled_style.set_border_width_all(0)
+	disabled_style.set_corner_radius_all(0)
 
 	for button: Button in [new_game_button, continue_button, settings_button, quit_button]:
 		button.text = ""
@@ -55,6 +55,7 @@ func _style_menu_buttons() -> void:
 		button.add_theme_stylebox_override("normal", normal_style)
 		button.add_theme_stylebox_override("hover", hover_style)
 		button.add_theme_stylebox_override("pressed", pressed_style)
+		button.add_theme_stylebox_override("hover_pressed", pressed_style)
 		button.add_theme_stylebox_override("focus", focus_style)
 		button.add_theme_stylebox_override("disabled", disabled_style)
 
